@@ -65,9 +65,9 @@ class ShippingZone extends DataObject{
 	}
 	
 	function getTitle(){
-		$country = $this->Country;
+		$country = Geoip::countryCode2name($this->Country);
 		if(empty($country)){
-			$country = "international";
+			$country = _t("ShippingZone.INTERNATIONAL","International");
 		}
 		return implode(" - ",array_filter(array($country,$this->Region)));
 	}

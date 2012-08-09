@@ -11,10 +11,11 @@ class WeightShippingConfig extends DataObjectDecorator{
 	}
 	
 	function updateCMSFields($fields){
-		$zones = DataObject::get('ShippingZone');
-		$fields->addFieldToTab('Root.Shipping',
-			$zonesfield = new DropdownField("DefaultShippingZoneID","Default Shipping Zone",$zones->map())
-		);
+		if($zones = DataObject::get('ShippingZone')){
+			$fields->addFieldToTab('Root.Shipping',
+				$zonesfield = new DropdownField("DefaultShippingZoneID","Default Shipping Zone",$zones->map())
+			);
+		}
 	}
 	
 }

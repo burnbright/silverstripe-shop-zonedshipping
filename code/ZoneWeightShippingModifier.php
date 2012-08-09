@@ -26,13 +26,13 @@ class ZoneWeightShippingModifier extends WeightShippingModifier{
 				}
 			}
 		}
-		//TODO: prevent free shipping?
-		
 		return $this->Amount = $amount;
 	}
 	
 	function	TableTitle(){
-		return parent::TableTitle()." (".$this->getZone()->getTitle().")";
+		if($zone = $this->getZone())
+			return parent::TableTitle()." (".$zone->getTitle().")";
+		return parent::TableTitle();
 	}
 	
 	function getZone(){
@@ -40,7 +40,10 @@ class ZoneWeightShippingModifier extends WeightShippingModifier{
 		if(!$zone->exists()){
 			$zone = SiteConfig::current_site_config()->DefaultShippingZone();
 		}
-		return $zone;
+		if($zone->exists()){
+			return $zone;
+		}
+		return null;
 	}
 	
 }
@@ -48,10 +51,12 @@ class ZoneWeightShippingModifier extends WeightShippingModifier{
 class ChangeZoneForm extends Form{
 	
 	function __construct($controller) {
-		$zones = DataObject::get('ShippingZone');
 		$fields = new FieldSet(
-			$zonesfield = new DropdownField("ZoneID","Shipping Region",$zones->map())
+			$zonesfield = new DropdownField("ZoneID","Shipping Region")
 		);
+		if($zones = DataObject::get('ShippingZone')){
+			$zonesfield->setSource($zones->map());
+		}
 		$actions = new FieldSet(
 			new FormAction('changeZone',"Change Region")
 		);
@@ -78,7 +83,10 @@ class ChangeZoneFormExtension extends Extension{
 	);
 	
 	function ChangeZoneForm(){
-		return new ChangeZoneForm($this->owner);
+		if(DataObject::get('ShippingZone')){
+			return new ChangeZoneForm($this->owner);
+		}
+		return null;
 	}
 	
 }

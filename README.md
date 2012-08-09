@@ -12,8 +12,8 @@ Visit the 'Shipping' section of the CMS.
 Add new zone(s)
 For each zone:
 
-	* Optionally specify a country, and region.
-	* Specify a number of maximum weights, and associated cost
+ * Optionally specify a country, and region.
+ * Specify a number of maximum weights, and associated cost
 	
 Visit the site config section, and choose a default zone.
 
@@ -21,3 +21,4 @@ Visit the site config section, and choose a default zone.
 
  * This module may be merged into the core module shop at some stage.
  * Allow setting up different shipping services per zone.
+ * Fail/fall back when no appropriate zone is set/found
