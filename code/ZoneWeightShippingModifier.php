@@ -18,7 +18,7 @@ class ZoneWeightShippingModifier extends WeightShippingModifier{
 		}
 		$amount = 0;
 		$zone = $this->getZone();
-		if($zone->exists() && $weightcosts = $zone->WeightCosts()){
+		if($zone && $zone->exists() && $weightcosts = $zone->WeightCosts()){
 			foreach($weightcosts as $weight) {
 				if($totalWeight <= $weight->Weight){
 					$amount =  $weight->Price;
