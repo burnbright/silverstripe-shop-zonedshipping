@@ -31,7 +31,7 @@ class ZoneWeightShippingModifier extends WeightShippingModifier{
 	
 	function	TableTitle(){
 		if($zone = $this->getZone())
-			return parent::TableTitle()." (".$zone->getTitle().")";
+			return  sprintf(_t("ZoneWeightShippingModifier.TABLETITLE","Shipping (%f kg) (to %s)"),$this->Weight(),$zone->getTitle());
 		return parent::TableTitle();
 	}
 	
@@ -52,13 +52,13 @@ class ChangeZoneForm extends Form{
 	
 	function __construct($controller) {
 		$fields = new FieldSet(
-			$zonesfield = new DropdownField("ZoneID","Shipping Region")
+			$zonesfield = new DropdownField("ZoneID",_t("ChangeZoneForm.SHIPPINGREGION","Shipping Region"))
 		);
 		if($zones = DataObject::get('ShippingZone')){
 			$zonesfield->setSource($zones->map());
 		}
 		$actions = new FieldSet(
-			new FormAction('changeZone',"Change Region")
+			new FormAction('changeZone',_t("ChangeZoneForm.CHANGEREGION","Change Region"))
 		);
 		parent::__construct($controller, "ChangeZoneForm", $fields, $actions);
 		$this->extend('updateForm');
